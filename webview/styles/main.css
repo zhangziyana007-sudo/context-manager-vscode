@@ -520,6 +520,212 @@ body {
   opacity: 1;
 }
 
+/* === Daily Mode === */
+.daily-mode-select,
+.daily-mode-active {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border, var(--vscode-widget-border));
+}
+
+.daily-greeting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.daily-hello {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.daily-pending {
+  font-size: 11px;
+  color: var(--vscode-editorWarning-foreground, #cca700);
+  background: rgba(204, 167, 0, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.mode-cards {
+  display: flex;
+  gap: 8px;
+}
+
+.mode-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: 8px;
+  border: 2px solid var(--vscode-panel-border, var(--vscode-widget-border));
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--vscode-foreground);
+}
+
+.mode-card:hover {
+  border-color: var(--vscode-focusBorder);
+  background: var(--vscode-list-hoverBackground);
+}
+
+.mode-card-icon {
+  font-size: 24px;
+}
+
+.mode-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.mode-card-body strong {
+  font-size: 12px;
+}
+
+.mode-card-body span {
+  font-size: 10px;
+  color: var(--vscode-descriptionForeground);
+}
+
+/* Active mode */
+.daily-active-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.daily-active-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.daily-switch {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--vscode-panel-border);
+  background: transparent;
+  color: var(--vscode-descriptionForeground);
+  cursor: pointer;
+}
+
+.daily-switch:hover {
+  color: var(--vscode-foreground);
+  border-color: var(--vscode-focusBorder);
+}
+
+.daily-todos {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.daily-todos-label,
+.daily-tips-label,
+.daily-prompts-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: var(--vscode-descriptionForeground);
+}
+
+.daily-todos-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.daily-todos-list li {
+  font-size: 11px;
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.daily-todos-list li::before {
+  content: '○';
+  position: absolute;
+  left: 0;
+  color: var(--vscode-editorWarning-foreground, #cca700);
+  font-size: 10px;
+}
+
+.daily-todos-list li.daily-todos-more {
+  color: var(--vscode-descriptionForeground);
+  font-style: italic;
+}
+
+.daily-todos-list li.daily-todos-more::before {
+  content: '';
+}
+
+.daily-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.daily-tip-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.daily-tip-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--vscode-button-foreground);
+  background: var(--vscode-button-background);
+  opacity: 0.8;
+}
+
+.daily-prompts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.daily-prompt {
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--vscode-textCodeBlock-background, rgba(127, 127, 127, 0.1));
+  color: var(--vscode-textLink-foreground);
+  display: block;
+}
+
+.daily-shortcuts {
+  display: flex;
+  gap: 6px;
+}
+
 /* === Resume Banner === */
 .resume-banner {
   display: flex;

@@ -7,6 +7,7 @@ import { LogPanel } from './components/LogPanel';
 import { DiffPreview } from './components/DiffPreview';
 import { HelpPanel } from './components/HelpPanel';
 import { ResumeBanner } from './components/ResumeBanner';
+import { DailyMode, WorkMode } from './components/DailyMode';
 import { StatusBar } from './components/StatusBar';
 import type { ProjectContext, MessageToWebview, Section, TodoItem } from '../src/types';
 
@@ -19,6 +20,7 @@ export function App() {
   const [error, setError] = useState<string>('');
   const [hasChanges, setHasChanges] = useState(false);
   const [diffData, setDiffData] = useState<{ oldContent: string; newContent: string } | null>(null);
+  const [workMode, setWorkMode] = useState<WorkMode>('none');
 
   const handleMessage = useCallback((msg: MessageToWebview) => {
     switch (msg.type) {
@@ -143,13 +145,14 @@ export function App() {
       </header>
 
       <main className="app-main">
-        {viewMode === 'sections' && pendingTodos.length > 0 && (
-          <ResumeBanner
-            pendingCount={pendingTodos.length}
-            doneCount={doneTodos.length}
-            lastUpdated={context.lastUpdated}
-            topPending={pendingTodos.slice(0, 3).map(t => t.text)}
-            onViewTodos={() => setViewMode('todos')}
+        {viewMode === 'sections' && (
+          <DailyMode
+            context={context}
+            currentMode={workMode}
+            onSelectMode={setWorkMode}
+            onSwitchToTodos={() => setViewMode('todos')}
+            onSwitchToLog={() => setViewMode('log')}
+            onSwitchToDiff={() => { setViewMode('diff'); handleRequestDiff(); }}
           />
         )}
 
