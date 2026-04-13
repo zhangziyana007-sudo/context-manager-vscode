@@ -4,7 +4,7 @@ interface ToolOption {
   id: string;
   name: string;
   files: string[];
-  description: string;
+  whatItDoes: string;
   icon: string;
 }
 
@@ -12,57 +12,31 @@ const AI_TOOLS: ToolOption[] = [
   {
     id: 'cursor',
     name: 'Cursor',
-    files: ['.cursor/rules/project-context.mdc', '.cursor/rules/context-handoff.mdc', '.cursor/skills/project-context/SKILL.md'],
-    description: 'Rules 自动注入 + Skill 关键词触发',
+    files: ['project-context.mdc', 'context-handoff.mdc', 'SKILL.md'],
+    whatItDoes: '让 Cursor 每次对话都自动了解你的项目',
     icon: '🖥️',
   },
   {
     id: 'claude-code',
     name: 'Claude Code',
     files: ['CLAUDE.md'],
-    description: '项目根目录上下文文件，Claude Code 自动读取',
+    whatItDoes: '让 Claude Code 打开项目就知道该怎么做',
     icon: '🤖',
   },
   {
     id: 'codex',
-    name: 'Codex / OpenAI',
+    name: 'Codex',
     files: ['AGENTS.md'],
-    description: '项目指令文件，Codex CLI 自动读取',
+    whatItDoes: '让 OpenAI Codex 理解你的项目规范',
     icon: '⚡',
   },
   {
     id: 'copilot',
     name: 'GitHub Copilot',
-    files: ['.github/copilot-instructions.md'],
-    description: 'Copilot 自定义指令，自动注入到每次交互',
+    files: ['copilot-instructions.md'],
+    whatItDoes: '让 Copilot 按你的风格写代码',
     icon: '🐙',
   },
-];
-
-const SKILL_COMMANDS = [
-  {
-    category: '生成与更新',
-    items: [
-      { keyword: '生成项目上下文', desc: 'AI 扫描项目结构，首次生成 PROJECT_CONTEXT.md + Rules' },
-      { keyword: '更新项目记忆', desc: 'AI 重新扫描项目，更新有变化的章节' },
-      { keyword: '保存进度', desc: 'AI 仅更新"待办"和"维护日志"，不全量扫描' },
-    ],
-  },
-  {
-    category: '了解与交接',
-    items: [
-      { keyword: '了解项目', desc: 'AI 读取 PROJECT_CONTEXT.md 并口头汇报概况' },
-      { keyword: '项目交接', desc: 'AI 生成完整上下文 + 交接摘要文本' },
-    ],
-  },
-];
-
-const PANEL_TIPS = [
-  { icon: '📋', text: '「章节」— 查看/编辑内容，右侧数字是 token 消耗' },
-  { icon: '✅', text: '「待办」— 勾选/新增 TODO，自动写回文件' },
-  { icon: '📝', text: '「日志」— 填表单添加维护日志' },
-  { icon: '🔀', text: '「对比」— 查看新旧版本差异' },
-  { icon: '⚡', text: '底部「精简版」— 一键生成省 token 的 MINI 版' },
 ];
 
 interface Props {
@@ -93,9 +67,13 @@ export function HelpPanel({ onConfigureRules, onConfigureTools }: Props) {
 
   return (
     <div className="help-panel">
+      {/* Step 1 */}
       <section className="help-section">
-        <h3 className="help-section-title">一键配置 AI 工具</h3>
-        <p className="help-desc">选择你使用的 AI 工具，一键生成对应的配置文件：</p>
+        <div className="step-header">
+          <span className="step-number">1</span>
+          <h3 className="help-section-title">你用哪些 AI 工具？</h3>
+        </div>
+        <p className="help-desc">勾选后点按钮，自动帮你配好配置文件。不确定就只选 Cursor。</p>
 
         <div className="tool-grid">
           {AI_TOOLS.map(tool => (
@@ -113,12 +91,7 @@ export function HelpPanel({ onConfigureRules, onConfigureTools }: Props) {
                   <span className="tool-icon">{tool.icon}</span>
                   <span className="tool-name">{tool.name}</span>
                 </div>
-                <span className="tool-desc">{tool.description}</span>
-                <div className="tool-files">
-                  {tool.files.map(f => (
-                    <code key={f} className="tool-file">{f}</code>
-                  ))}
-                </div>
+                <span className="tool-desc">{tool.whatItDoes}</span>
               </div>
             </label>
           ))}
@@ -129,45 +102,89 @@ export function HelpPanel({ onConfigureRules, onConfigureTools }: Props) {
           onClick={handleGenerate}
           disabled={selectedTools.size === 0}
         >
-          ⚙ 生成 {totalFiles} 个配置文件
+          ⚙ 一键生成 {totalFiles} 个配置文件
         </button>
       </section>
 
+      {/* Step 2 */}
       <section className="help-section">
-        <h3 className="help-section-title">对 AI 说这些关键词</h3>
-        <p className="help-desc">在 Cursor 对话框中输入关键词，AI 自动执行：</p>
-        {SKILL_COMMANDS.map(group => (
-          <div key={group.category} className="help-group">
-            <h4 className="help-group-title">{group.category}</h4>
-            {group.items.map(item => (
-              <div key={item.keyword} className="help-item">
-                <code className="help-keyword">{item.keyword}</code>
-                <span className="help-item-desc">{item.desc}</span>
-              </div>
-            ))}
+        <div className="step-header">
+          <span className="step-number">2</span>
+          <h3 className="help-section-title">让 AI 帮你写上下文</h3>
+        </div>
+        <p className="help-desc">在 Cursor 对话框里输入下面的话，AI 会自动分析你的项目并生成文件：</p>
+
+        <div className="keyword-cards">
+          <div className="keyword-card primary">
+            <span className="keyword-text">生成项目上下文</span>
+            <span className="keyword-effect">AI 扫描项目 → 生成完整的项目说明文件</span>
           </div>
-        ))}
+          <div className="keyword-card">
+            <span className="keyword-text">更新项目记忆</span>
+            <span className="keyword-effect">项目结构变了？让 AI 重新扫一遍</span>
+          </div>
+          <div className="keyword-card">
+            <span className="keyword-text">保存进度</span>
+            <span className="keyword-effect">快下线了？让 AI 记住你做到哪了</span>
+          </div>
+          <div className="keyword-card">
+            <span className="keyword-text">项目交接</span>
+            <span className="keyword-effect">需要把上下文发给别人？AI 帮你打包</span>
+          </div>
+        </div>
       </section>
 
+      {/* Step 3 */}
       <section className="help-section">
-        <h3 className="help-section-title">面板速查</h3>
-        {PANEL_TIPS.map((tip, i) => (
-          <div key={i} className="help-tip">
-            <span className="help-tip-icon">{tip.icon}</span>
-            <span className="help-tip-text">{tip.text}</span>
+        <div className="step-header">
+          <span className="step-number">3</span>
+          <h3 className="help-section-title">用面板管理内容</h3>
+        </div>
+        <p className="help-desc">顶部的 Tab 切换不同功能，都是帮你管理上下文的：</p>
+
+        <div className="feature-list">
+          <div className="feature-item">
+            <span className="feature-icon">📋</span>
+            <div className="feature-body">
+              <strong>章节</strong>
+              <span>看项目说明的各个部分，可以直接编辑</span>
+            </div>
           </div>
-        ))}
+          <div className="feature-item">
+            <span className="feature-icon">✅</span>
+            <div className="feature-body">
+              <strong>待办</strong>
+              <span>点一下就能勾选完成，也能新增</span>
+            </div>
+          </div>
+          <div className="feature-item">
+            <span className="feature-icon">📝</span>
+            <div className="feature-body">
+              <strong>日志</strong>
+              <span>填个表就能记录"今天改了什么"</span>
+            </div>
+          </div>
+          <div className="feature-item">
+            <span className="feature-icon">🔀</span>
+            <div className="feature-body">
+              <strong>对比</strong>
+              <span>看看 AI 或你自己改了哪些内容</span>
+            </div>
+          </div>
+        </div>
       </section>
 
+      {/* Bottom tips */}
       <section className="help-section">
-        <h3 className="help-section-title">推荐工作流</h3>
-        <ol className="help-workflow">
-          <li>在本面板选择工具并点击「生成配置文件」</li>
-          <li>对 AI 说<code>生成项目上下文</code>→ AI 自动生成文件</li>
-          <li>在「章节」Tab 检查和微调内容</li>
-          <li>看底部 token 数，太大就点<code>⚡ 精简版</code></li>
-          <li>日常开发中，AI 会自动更新待办和日志</li>
-        </ol>
+        <div className="step-header">
+          <span className="step-number">💡</span>
+          <h3 className="help-section-title">小贴士</h3>
+        </div>
+        <div className="tips-box">
+          <p>底部的数字（如 <strong>2.1k tokens</strong>）表示这个文件有多"重"。</p>
+          <p>数字越大，AI 读它消耗越多。绿色好，黄色一般，红色建议精简。</p>
+          <p>点底部 <strong>⚡ 精简版</strong> 可以生成一个轻量版，省 70% token。</p>
+        </div>
       </section>
     </div>
   );
