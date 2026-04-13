@@ -715,6 +715,41 @@ body {
   font-size: 11px;
 }
 
+.config-btn {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 4px 0 8px;
+}
+
+.config-files {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.config-file {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  background: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border, var(--vscode-widget-border));
+}
+
+.config-file code {
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 11px;
+  color: var(--vscode-textLink-foreground);
+}
+
+.config-file-desc {
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground);
+}
+
 /* === Scrollbar === */
 ::-webkit-scrollbar {
   width: 8px;

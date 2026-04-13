@@ -34,9 +34,35 @@ const PANEL_TIPS = [
   { icon: '⚡', text: '底部「精简版」按钮 — 一键生成省 token 的 MINI 版' },
 ];
 
-export function HelpPanel() {
+interface Props {
+  onConfigureRules: () => void;
+}
+
+export function HelpPanel({ onConfigureRules }: Props) {
   return (
     <div className="help-panel">
+      <section className="help-section">
+        <h3 className="help-section-title">快速配置</h3>
+        <p className="help-desc">为当前项目一键生成 Cursor Rules 和 Skill 配置文件：</p>
+        <button className="btn btn-primary config-btn" onClick={onConfigureRules}>
+          ⚙ 一键配置 Rules & Skill
+        </button>
+        <div className="config-files">
+          <div className="config-file">
+            <code>.cursor/rules/project-context.mdc</code>
+            <span className="config-file-desc">AI 自动加载的项目速览</span>
+          </div>
+          <div className="config-file">
+            <code>.cursor/rules/context-handoff.mdc</code>
+            <span className="config-file-desc">AI 对话间自动接力进度</span>
+          </div>
+          <div className="config-file">
+            <code>.cursor/skills/project-context/SKILL.md</code>
+            <span className="config-file-desc">AI 关键词触发的上下文技能</span>
+          </div>
+        </div>
+      </section>
+
       <section className="help-section">
         <h3 className="help-section-title">对 AI 说这些关键词</h3>
         <p className="help-desc">在 Cursor 对话框中输入以下关键词，AI 会自动执行对应操作：</p>

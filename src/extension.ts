@@ -4,6 +4,7 @@ import { ContextParser } from './contextParser';
 import { ContextWriter } from './contextWriter';
 import { ContextGenerator } from './contextGenerator';
 import { MiniGenerator } from './miniGenerator';
+import { ConfigGenerator } from './configGenerator';
 import { FileWatcher } from './fileWatcher';
 import { DiffManager } from './diffManager';
 import { formatTokenCount } from './tokenEstimator';
@@ -15,6 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
   const writer = new ContextWriter();
   const generator = new ContextGenerator();
   const miniGenerator = new MiniGenerator();
+  const configGenerator = new ConfigGenerator();
   const diffManager = new DiffManager(context);
 
   const sidebarProvider = new SidebarProvider(
@@ -106,6 +108,28 @@ export function activate(context: vscode.ExtensionContext) {
         );
       } catch (e: any) {
         vscode.window.showErrorMessage(`生成精简版失败: ${e.message}`);
+      }
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('contextManager.configureRules', async () => {
+      const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+      if (!workspaceFolder) {
+        vscode.window.showErrorMessage('请先打开一个工作区');
+        return;
+      }
+      try {
+        const created = await configGenerator.generateAll(workspaceFolder.uri.fsPath);
+        if (created.length === 0) {
+          vscode.window.showInformationMessage('所有配置文件已是最新');
+        } else {
+          vscode.window.showInformationMessage(
+            `已生成 ${created.length} 个配置文件：${created.join(', ')}`
+          );
+        }
+      } catch (e: any) {
+        vscode.window.showErrorMessage(`配置生成失败: ${e.message}`);
       }
     })
   );

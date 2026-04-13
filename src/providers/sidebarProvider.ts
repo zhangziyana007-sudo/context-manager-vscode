@@ -159,6 +159,11 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
         vscode.commands.executeCommand('contextManager.generateMini');
         break;
       }
+
+      case 'configureRules': {
+        vscode.commands.executeCommand('contextManager.configureRules');
+        break;
+      }
     }
   }
 

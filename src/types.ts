@@ -50,4 +50,5 @@ export type MessageFromWebview =
   | { type: 'requestDiff' }
   | { type: 'runCommand'; command: string }
   | { type: 'requestContext' }
-  | { type: 'generateMini' };
+  | { type: 'generateMini' }
+  | { type: 'configureRules' };

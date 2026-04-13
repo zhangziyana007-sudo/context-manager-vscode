@@ -63,6 +63,11 @@
         "command": "contextManager.generateMini",
         "title": "Context: 生成精简版（省 Token）",
         "icon": "$(zap)"
+      },
+      {
+        "command": "contextManager.configureRules",
+        "title": "Context: 一键配置 Rules & Skill",
+        "icon": "$(gear)"
       }
     ],
     "menus": {
