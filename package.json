@@ -1,0 +1,112 @@
+{
+  "name": "context-manager",
+  "displayName": "Context Manager",
+  "description": "可视化管理 PROJECT_CONTEXT.md，让 AI 上下文接力更高效",
+  "version": "0.1.0",
+  "publisher": "zknow",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "contextManager",
+          "title": "Context Manager",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "contextManager": [
+        {
+          "type": "webview",
+          "id": "contextManager.sidebar",
+          "name": "项目上下文"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "contextManager.generate",
+        "title": "Context: 生成项目上下文",
+        "icon": "$(add)"
+      },
+      {
+        "command": "contextManager.update",
+        "title": "Context: 更新项目上下文",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "contextManager.saveProgress",
+        "title": "Context: 保存进度",
+        "icon": "$(save)"
+      },
+      {
+        "command": "contextManager.showDiff",
+        "title": "Context: 查看变更对比",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "contextManager.openFile",
+        "title": "Context: 打开上下文文件",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "contextManager.generateMini",
+        "title": "Context: 生成精简版（省 Token）",
+        "icon": "$(zap)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "contextManager.generate",
+          "when": "view == contextManager.sidebar",
+          "group": "navigation@1"
+        },
+        {
+          "command": "contextManager.update",
+          "when": "view == contextManager.sidebar",
+          "group": "navigation@2"
+        },
+        {
+          "command": "contextManager.showDiff",
+          "when": "view == contextManager.sidebar",
+          "group": "navigation@3"
+        },
+        {
+          "command": "contextManager.openFile",
+          "when": "view == contextManager.sidebar",
+          "group": "navigation@4"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "node esbuild.js --production",
+    "build": "node esbuild.js",
+    "watch": "node esbuild.js --watch"
+  },
+  "devDependencies": {
+    "@types/diff": "^6.0.0",
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "diff": "^7.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
