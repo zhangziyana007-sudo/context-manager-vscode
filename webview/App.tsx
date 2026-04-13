@@ -174,7 +174,10 @@ export function App() {
         )}
 
         {viewMode === 'help' && (
-          <HelpPanel onConfigureRules={() => postMessage({ type: 'configureRules' })} />
+          <HelpPanel
+            onConfigureRules={() => postMessage({ type: 'configureRules' })}
+            onConfigureTools={(tools) => postMessage({ type: 'configureTools', tools })}
+          />
         )}
       </main>
 

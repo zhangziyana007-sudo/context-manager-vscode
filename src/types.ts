@@ -51,4 +51,5 @@ export type MessageFromWebview =
   | { type: 'runCommand'; command: string }
   | { type: 'requestContext' }
   | { type: 'generateMini' }
-  | { type: 'configureRules' };
+  | { type: 'configureRules' }
+  | { type: 'configureTools'; tools: string[] };

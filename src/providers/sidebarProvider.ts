@@ -2,11 +2,14 @@ import * as vscode from 'vscode';
 import { ContextParser } from '../contextParser';
 import { ContextWriter } from '../contextWriter';
 import { DiffManager } from '../diffManager';
+import { ConfigGenerator, ToolId } from '../configGenerator';
 import type { MessageFromWebview, MessageToWebview, ProjectContext } from '../types';
 
 export class SidebarProvider implements vscode.WebviewViewProvider {
   private view?: vscode.WebviewView;
   private currentContext?: ProjectContext;
+
+  private configGenerator = new ConfigGenerator();
 
   constructor(
     private readonly extensionUri: vscode.Uri,
@@ -162,6 +165,23 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 
       case 'configureRules': {
         vscode.commands.executeCommand('contextManager.configureRules');
+        break;
+      }
+
+      case 'configureTools': {
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+        if (!workspaceFolder) { return; }
+        try {
+          const tools = msg.tools as ToolId[];
+          const created = await this.configGenerator.generateForTools(
+            workspaceFolder.uri.fsPath, tools
+          );
+          vscode.window.showInformationMessage(
+            `已生成 ${created.length} 个配置文件：${created.join(', ')}`
+          );
+        } catch (e: any) {
+          this.postMessage({ type: 'error', message: e.message });
+        }
         break;
       }
     }
