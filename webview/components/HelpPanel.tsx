@@ -174,6 +174,118 @@ export function HelpPanel({ onConfigureRules, onConfigureTools }: Props) {
         </div>
       </section>
 
+      {/* Complete Workflow */}
+      <section className="help-section">
+        <div className="step-header">
+          <span className="step-number">🔄</span>
+          <h3 className="help-section-title">完整工作流</h3>
+        </div>
+        <p className="help-desc">推荐你按这个流程使用，形成习惯后 AI 效率提升巨大：</p>
+
+        <div className="workflow-timeline">
+          <div className="workflow-phase">
+            <div className="phase-header">
+              <span className="phase-icon">🚀</span>
+              <span className="phase-title">初次使用（做一次就好）</span>
+            </div>
+            <div className="phase-steps">
+              <div className="phase-step">
+                <span className="step-dot done" />
+                <span>在上面「第 1 步」勾选 AI 工具，点按钮生成配置文件</span>
+              </div>
+              <div className="phase-step">
+                <span className="step-dot done" />
+                <span>对 AI 说<code>生成项目上下文</code>，等 AI 生成好文件</span>
+              </div>
+              <div className="phase-step">
+                <span className="step-dot done" />
+                <span>打开「章节」Tab，检查 AI 生成的内容，不满意就编辑</span>
+              </div>
+              <div className="phase-step">
+                <span className="step-dot done" />
+                <span>看底部 token 数，超过 4k 就点<code>⚡ 精简版</code></span>
+              </div>
+            </div>
+          </div>
+
+          <div className="workflow-phase">
+            <div className="phase-header">
+              <span className="phase-icon">💻</span>
+              <span className="phase-title">每天开发时</span>
+            </div>
+            <div className="phase-steps">
+              <div className="phase-step">
+                <span className="step-dot" />
+                <span>打开项目 → 右下角弹出提醒 → 看看有什么待办</span>
+              </div>
+              <div className="phase-step">
+                <span className="step-dot" />
+                <span>正常写代码，AI 会自动更新待办和日志</span>
+              </div>
+              <div className="phase-step">
+                <span className="step-dot" />
+                <span>下班前对 AI 说<code>保存进度</code>，让它记住你做到哪</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="workflow-phase">
+            <div className="phase-header">
+              <span className="phase-icon">🔁</span>
+              <span className="phase-title">第二天继续</span>
+            </div>
+            <div className="phase-steps">
+              <div className="phase-step">
+                <span className="step-dot" />
+                <span>打开项目 → 插件自动提醒待办 → 接着上次继续</span>
+              </div>
+              <div className="phase-step">
+                <span className="step-dot" />
+                <span>开新对话，AI 自动读取上下文，不用重新介绍项目</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="workflow-phase">
+            <div className="phase-header">
+              <span className="phase-icon">📦</span>
+              <span className="phase-title">项目有变化时</span>
+            </div>
+            <div className="phase-steps">
+              <div className="phase-step">
+                <span className="step-dot" />
+                <span>新增了文件/目录？对 AI 说<code>更新项目记忆</code></span>
+              </div>
+              <div className="phase-step">
+                <span className="step-dot" />
+                <span>底部出现黄色「刷新」？点一下，面板同步最新内容</span>
+              </div>
+              <div className="phase-step">
+                <span className="step-dot" />
+                <span>在「对比」Tab 看看 AI 或自己改了什么</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="workflow-phase">
+            <div className="phase-header">
+              <span className="phase-icon">🤝</span>
+              <span className="phase-title">换设备或给别人用时</span>
+            </div>
+            <div className="phase-steps">
+              <div className="phase-step">
+                <span className="step-dot" />
+                <span>对 AI 说<code>项目交接</code>，AI 生成一段摘要</span>
+              </div>
+              <div className="phase-step">
+                <span className="step-dot" />
+                <span>把摘要粘贴到新对话，新 AI 秒懂项目全貌</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Bottom tips */}
       <section className="help-section">
         <div className="step-header">
@@ -184,6 +296,7 @@ export function HelpPanel({ onConfigureRules, onConfigureTools }: Props) {
           <p>底部的数字（如 <strong>2.1k tokens</strong>）表示这个文件有多"重"。</p>
           <p>数字越大，AI 读它消耗越多。绿色好，黄色一般，红色建议精简。</p>
           <p>点底部 <strong>⚡ 精简版</strong> 可以生成一个轻量版，省 70% token。</p>
+          <p>命令面板 <code>Ctrl+Shift+P</code> 输入 <strong>Context:</strong> 可以看到所有命令。</p>
         </div>
       </section>
     </div>

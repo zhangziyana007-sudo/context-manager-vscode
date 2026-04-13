@@ -883,6 +883,87 @@ body {
   color: var(--vscode-foreground);
 }
 
+.tips-box code {
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 11px;
+  background: var(--vscode-textCodeBlock-background, rgba(127, 127, 127, 0.1));
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+/* Workflow Timeline */
+.workflow-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.workflow-phase {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border, var(--vscode-widget-border));
+}
+
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.phase-icon {
+  font-size: 16px;
+}
+
+.phase-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--vscode-foreground);
+}
+
+.phase-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 4px;
+}
+
+.phase-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--vscode-foreground);
+}
+
+.phase-step code {
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 11px;
+  background: var(--vscode-textCodeBlock-background, rgba(127, 127, 127, 0.1));
+  padding: 0 4px;
+  border-radius: 2px;
+  color: var(--vscode-textLink-foreground);
+  font-weight: 600;
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--vscode-descriptionForeground);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.step-dot.done {
+  background: var(--vscode-gitDecoration-addedResourceForeground, #3fb950);
+  border-color: var(--vscode-gitDecoration-addedResourceForeground, #3fb950);
+}
+
 /* === Scrollbar === */
 ::-webkit-scrollbar {
   width: 8px;
