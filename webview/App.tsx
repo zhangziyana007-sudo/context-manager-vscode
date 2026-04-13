@@ -6,8 +6,9 @@ import { TodoPanel } from './components/TodoPanel';
 import { LogPanel } from './components/LogPanel';
 import { DiffPreview } from './components/DiffPreview';
 import { HelpPanel } from './components/HelpPanel';
+import { ResumeBanner } from './components/ResumeBanner';
 import { StatusBar } from './components/StatusBar';
-import type { ProjectContext, MessageToWebview, Section } from '../src/types';
+import type { ProjectContext, MessageToWebview, Section, TodoItem } from '../src/types';
 
 type ViewMode = 'sections' | 'todos' | 'log' | 'diff' | 'help';
 
@@ -98,6 +99,11 @@ export function App() {
 
   const currentSection = context.sections.find(s => s.id === activeSection);
 
+  const statusSection = context.sections.find(s => s.id === 'status');
+  const todos = statusSection ? parseTodosFromContent(statusSection.content) : [];
+  const pendingTodos = todos.filter(t => !t.done);
+  const doneTodos = todos.filter(t => t.done);
+
   return (
     <div className="app">
       <header className="app-header">
@@ -137,6 +143,16 @@ export function App() {
       </header>
 
       <main className="app-main">
+        {viewMode === 'sections' && pendingTodos.length > 0 && (
+          <ResumeBanner
+            pendingCount={pendingTodos.length}
+            doneCount={doneTodos.length}
+            lastUpdated={context.lastUpdated}
+            topPending={pendingTodos.slice(0, 3).map(t => t.text)}
+            onViewTodos={() => setViewMode('todos')}
+          />
+        )}
+
         {viewMode === 'sections' && (
           <div className="sections-view">
             <SectionNav
@@ -193,4 +209,16 @@ export function App() {
       />
     </div>
   );
+}
+
+function parseTodosFromContent(content: string): TodoItem[] {
+  const items: TodoItem[] = [];
+  const lines = content.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const match = lines[i].match(/^- \[([ xX])\]\s+(.*)/);
+    if (match) {
+      items.push({ done: match[1] !== ' ', text: match[2].trim(), line: i });
+    }
+  }
+  return items;
 }

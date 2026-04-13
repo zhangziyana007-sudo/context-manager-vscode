@@ -52,4 +52,5 @@ export type MessageFromWebview =
   | { type: 'requestContext' }
   | { type: 'generateMini' }
   | { type: 'configureRules' }
-  | { type: 'configureTools'; tools: string[] };
+  | { type: 'configureTools'; tools: string[] }
+  | { type: 'switchTab'; tab: string };

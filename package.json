@@ -68,6 +68,11 @@
         "command": "contextManager.configureRules",
         "title": "Context: 一键配置 Rules & Skill",
         "icon": "$(gear)"
+      },
+      {
+        "command": "contextManager.resume",
+        "title": "Context: 继续上次任务",
+        "icon": "$(play)"
       }
     ],
     "menus": {
